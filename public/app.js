@@ -219,6 +219,7 @@ function renderDetail(){
   document.getElementById('detailIngredients').innerHTML = (product.ingredients || []).map(i => `<span>${escapeHtml(i)}</span>`).join('');
   document.getElementById('detailUsage').innerHTML = (product.usage || []).map(step => `<div class="step"><strong>${escapeHtml(step[0])}</strong><span class="muted">${escapeHtml(step[1])}</span></div>`).join('');
   document.getElementById('detailQty').textContent = state.detailQty;
+   document.getElementById('detailArt').innerHTML = productVisual(product);
 }
 
 function showProductDetail(id){
