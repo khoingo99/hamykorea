@@ -145,15 +145,15 @@ async function loadProducts(){
 
 function renderLiveStats(){
   const el = document.getElementById('liveProductCount');
-  const priceEl = document.getElementById('liveProductPrice');
+  // const priceEl = document.getElementById('liveProductPrice');
   if(state.products.length === 0){
     el.textContent = 'Chưa có sản phẩm';
-    priceEl.textContent = '--';
+    // priceEl.textContent = '--';
     return;
   }
   el.textContent = `${state.products.length} sản phẩm`;
   const featured = state.products.find(p => p.tag === 'Serum') || state.products[0];
-  priceEl.textContent = formatPrice(featured.price);
+  // priceEl.textContent = formatPrice(featured.price);
 }
 
 function shapeMarkup(shape){
@@ -182,9 +182,9 @@ function renderProducts(){
     <article class="card">
       <div class="card-media">${productVisual(p)}</div>
       <div class="card-body">
-        <div class="eyebrow">${escapeHtml(p.tag || p.category)}</div>
+        <div ></div>
         <h3>${escapeHtml(p.name)}</h3>
-        <p>${escapeHtml(p.description)}</p>
+        <div></div>
         <div class="benefit-list">${(p.benefits || []).map(b => `<span>${escapeHtml(b)}</span>`).join('')}</div>
         <div class="price-row">
           <div class="price"><strong>${formatPrice(p.price)}</strong><span class="stock">${escapeHtml(p.stock || 'Còn hàng')}</span></div>
@@ -212,15 +212,12 @@ function renderDetail(){
   if(!product) return;
   document.getElementById('detailCategory').textContent = product.tag || product.category;
   document.getElementById('detailName').textContent = product.name;
-  document.getElementById('detailPrice').textContent = formatPrice(product.price);
   document.getElementById('detailRating').textContent = product.rating || '★ --';
   document.getElementById('detailStock').textContent = product.stock || 'Còn hàng';
   document.getElementById('detailDesc').textContent = product.description;
   document.getElementById('detailBenefits').innerHTML = (product.benefits || []).map(b => `<span>${escapeHtml(b)}</span>`).join('');
   document.getElementById('detailIngredients').innerHTML = (product.ingredients || []).map(i => `<span>${escapeHtml(i)}</span>`).join('');
   document.getElementById('detailUsage').innerHTML = (product.usage || []).map(step => `<div class="step"><strong>${escapeHtml(step[0])}</strong><span class="muted">${escapeHtml(step[1])}</span></div>`).join('');
-  document.getElementById('detailReviews').innerHTML = (product.reviews || []).map(r => `<div class="review-card"><strong>${escapeHtml(r[0])}</strong><p class="muted" style="margin:8px 0 0">${escapeHtml(r[1])}</p></div>`).join('');
-  document.getElementById('detailArt').innerHTML = productVisual(product);
   document.getElementById('detailQty').textContent = state.detailQty;
 }
 
