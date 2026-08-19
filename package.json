@@ -1,0 +1,27 @@
+{
+  "name": "k-beauty-shop",
+  "version": "1.0.0",
+  "description": "Full-stack K-beauty shopping mall with Express + SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "dev": "nodemon -e js,html,css server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^13.0.3",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.22.2",
+    "jsonwebtoken": "^9.0.2",
+    "livereload": "^0.10.3",
+    "multer": "^2.2.0"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

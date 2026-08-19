@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HAMY Korea Authentic</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark">HAMY</div>
+        <div>
+          <strong>HAMY Korea Authentic</strong>
+          <span>My Korea nhận sỉ – lẻ mọi số lượng.</span>
+        </div>
+      </div>
+      <nav class="menu">
+        <a href="#products">Sản phẩm</a>
+        <a href="#detail">Chi tiết</a>
+        <a href="#benefits">Lợi ích</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="pill" id="accountPill" onclick="openAuthModal()">Đăng nhập</button>
+        <button class="btn btn-secondary btn-sm" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+        <button class="btn btn-primary btn-sm" onclick="scrollToSection('products')">Mua ngay</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div>
+          <span class="badge">✨ Đợi hamie nghĩ content</span>
+          <h1>Cửa hàng mỹ phẩm Hàn Quốc</h1>
+          <p class="lead">Mua trực tiếp tại Hàn – về tay khách</p>
+          <div class="cta">
+            <button class="btn btn-primary" onclick="scrollToSection('products')">Khám phá sản phẩm</button>
+            <button class="btn btn-secondary" onclick="openAuthModal()">Tạo tài khoản</button>
+            <!-- <a class="btn btn-soft" href="/admin">Trang quản trị →</a> --> 
+          </div>
+          <div class="hero-trust">
+            <div class="trust-chip">mẫu sản phẩn hot</div>
+            <!-- <div class="trust-chip">mẫu sản phẩn hot</div>
+            <div class="trust-chip">mẫu sản phẩn hot</div> -->
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="orb"></div>
+          <div class="visual-stack">
+            <div class="visual-card">
+              <div class="product-art">
+                <div class="bottle"></div>
+                <div class="jar"></div>
+                <div class="tube"></div>
+              </div>
+              <div class="mini-card">
+                <div>
+                  <strong id="liveProductCount">Loading…</strong>
+                  <span>đang được bày bán</span>
+                </div>
+                <div class="price-tag" id="liveProductPrice"></div>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat"><span>Đợi hamie</span><strong> nghĩ content</strong></div>
+              <div class="stat"><span>Đợi hamie</span><strong> nghĩ content</strong></div>
+              <div class="stat"><span>Đợi hamie</span><strong> nghĩ content</strong></div>
+              <div class="stat"><span>Đợi hamie</span><strong> nghĩ content</strong></div>
+              <!-- <div class="stat"><span>Auth</span><strong>JWT 7 day</strong></div>
+              <div class="stat"><span>Server</span><strong>Node 18+</strong></div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <h2 class="section-title">Sản phẩm nổi bật</h2>
+        <p class="section-text"> Mỗi sản phẩm có trang chi tiết, giỏ hàng và thanh toán.</p>
+        <div class="toolbar">
+          <div class="filters">
+            <button class="chip active" data-filter="all">Tất cả</button>
+            <button class="chip" data-filter="serum">Serum</button>
+            <button class="chip" data-filter="toner">Toner</button>
+            <button class="chip" data-filter="cream">Kem dưỡng</button>
+            <button class="chip" data-filter="sunscreen">Chống nắng</button>
+            <button class="chip" data-filter="mask">Sản phẩm khác</button>
+            <!-- <button class="chip" data-filter="mask">Thực phẩm chức năng</button> -->
+          </div>
+          <div class="cart-box" onclick="openCart()">Đơn hàng hiện tại: <span id="cartCountTop">0</span> sản phẩm</div>
+        </div>
+        <div class="grid" id="productGrid"><div class="empty">Đang tải sản phẩm…</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="detail">
+      <div class="container">
+        <h2 class="section-title">Trang chi tiết sản phẩm</h2>
+        <!-- <p class="section-text">Tự động đồng bộ với sản phẩm được chọn. Nhấn "Xem chi tiết" trên bất kỳ thẻ sản phẩm nào để chuyển tới đây.</p> -->
+        <div class="detail-shell">
+          <div class="detail-visual">
+            <div id="detailArt" class="product-art"></div>
+          </div>
+          <div class="detail-info">
+            <div class="eyebrow" id="detailCategory">Serum</div>
+            <h3 id="detailName">Loading…</h3>
+            <div class="detail-price">
+              <strong id="detailPrice">₫0</strong>
+              <span class="rating" id="detailRating">★ --</span>
+              <span class="pill" id="detailStock">--</span>
+            </div>
+            <p class="detail-copy" id="detailDesc"></p>
+            <div class="tag-row" id="detailBenefits"></div>
+
+            <div class="qty-row">
+              <div class="qty-box">
+                <button onclick="changeDetailQty(-1)">−</button>
+                <span id="detailQty">1</span>
+                <button onclick="changeDetailQty(1)">+</button>
+              </div>
+              <button class="btn btn-primary" onclick="addCurrentDetailToCart()">Thêm vào giỏ</button>
+              <button class="btn btn-dark" onclick="buyNowCurrent()">Mua ngay</button>
+            </div>
+
+            <div class="subsection">
+              <h4>Thành phần nổi bật</h4>
+              <div class="ingredient-grid" id="detailIngredients"></div>
+            </div>
+            <div class="subsection">
+              <h4>Cách dùng</h4>
+              <div class="usage-list" id="detailUsage"></div>
+            </div>
+            <div class="subsection">
+              <h4>Đánh giá khách hàng</h4>
+              <div class="review-grid" id="detailReviews"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="benefits">
+      <div class="container">
+        <h2 class="section-title">Vì sao khách hàng yêu thích HAMY KOREA Authentic</h2>
+        <div class="features">
+          <div class="feature"><div class="icon">🌿</div><h4>nguồn hàng rõ ràng</h4><p>content</p></div>
+          <div class="feature"><div class="icon">💧</div><h4>giá tận kho – tận xưởng</h4><p>content</p></div>
+          <div class="feature"><div class="icon">✨</div><h4>My Korea nhận sỉ – lẻ mọi số lượng</h4><p>content</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-head">
+      <div>
+        <strong style="font-size:24px">Giỏ hàng</strong>
+        <!-- <div class="muted">Đồng bộ qua API, lưu theo tài khoản</div> -->
+      </div>
+      <button class="close-btn" onclick="closeCart()">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="summary-box">
+        <div class="summary-row"><span>Tạm tính</span><strong id="subtotalText">₫0</strong></div>
+        <div class="summary-row"><span>Phí ship</span><strong id="shippingText">₫0</strong></div>
+        <div class="summary-row total"><span>Tổng cộng</span><strong id="totalText">₫0</strong></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="openCheckout()">Tiến hành thanh toán</button>
+      <!-- <p class="helper" style="margin-top:10px">Đơn hàng sẽ được ghi vào cơ sở dữ liệu SQLite và hiển thị trong trang quản trị.</p> -->
+    </div>
+  </aside>
+
+  <div class="overlay" id="authOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h3>Tài khoản khách hàng</h3>
+          <div class="muted">Đăng nhập hoặc tạo tài khoản mới</div>
+        </div>
+        <button class="close-btn" onclick="closeAuthModal()">×</button>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" onclick="switchAuthTab('login')">Đăng nhập</button>
+        <button class="auth-tab" id="registerTab" onclick="switchAuthTab('register')">Đăng ký</button>
+      </div>
+      <form id="loginForm">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Email</label>
+            <input class="input" id="loginEmail" type="email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group full">
+            <label>Mật khẩu</label>
+            <input class="input" id="loginPassword" type="password" placeholder="••••••••" />
+          </div>
+        </div>
+        <p class="helper">Tài khoản demo: <strong>demo@hamie.com</strong> / <strong>demo1234</strong></p>
+        <button type="button" class="btn btn-primary btn-block" onclick="handleLogin()">Đăng nhập</button>
+      </form>
+      <form id="registerForm" class="hidden">
+        <div class="form-grid">
+          <div class="form-group"><label>Họ tên</label><input class="input" id="registerName" type="text" placeholder="Nguyen Lan Anh" /></div>
+          <div class="form-group"><label>Số điện thoại</label><input class="input" id="registerPhone" type="tel" placeholder="0901 234 567" /></div>
+          <div class="form-group full"><label>Email</label><input class="input" id="registerEmail" type="email" placeholder="you@example.com" /></div>
+          <div class="form-group full"><label>Mật khẩu</label><input class="input" id="registerPassword" type="password" placeholder="Tối thiểu 6 ký tự" /></div>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" onclick="handleRegister()">Tạo tài khoản</button>
+      </form>
+      <p id="authMessage" class="helper" style="margin-top:14px"></p>
+    </div>
+  </div>
+
+  <div class="overlay" id="checkoutOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h3>Thanh toán đơn hàng</h3>
+          <!-- <div class="muted">Đơn sẽ được ghi vào database qua API</div> -->
+        </div>
+        <button class="close-btn" onclick="closeCheckout()">×</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group"><label>Họ tên người nhận</label><input class="input" id="checkoutName" type="text" placeholder="Nguyen Van A" /></div>
+        <div class="form-group"><label>Số điện thoại</label><input class="input" id="checkoutPhone" type="tel" placeholder="0901 234 567" /></div>
+        <div class="form-group full"><label>Địa chỉ giao hàng</label><input class="input" id="checkoutAddress" type="text" placeholder="Số nhà, đường, quận/huyện" /></div>
+        <div class="form-group">
+          <label>Thành phố</label>
+          <select class="select" id="checkoutCity">
+            <option value="">Chọn thành phố</option>
+            <option>Hà Nội</option>
+            <option>TP. Hồ Chí Minh</option>
+            <option>Đà Nẵng</option>
+            <option>Cần Thơ</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Ghi chú</label><input class="input" id="checkoutNote" type="text" placeholder="Ghi chú giao hàng" /></div>
+      </div>
+      <div class="subsection">
+        <h4>Phương thức thanh toán (demo)</h4>
+        <div class="payment-options" id="paymentOptions">
+          <button class="pay-card active" data-pay="cod">COD</button>
+          <button class="pay-card" data-pay="card">Thẻ ngân hàng</button>
+          <button class="pay-card" data-pay="wallet">Ví điện tử</button>
+          <button class="pay-card" data-pay="bank">Chuyển khoản</button>
+        </div>
+      </div>
+      <div class="subsection">
+        <h4>Tóm tắt đơn hàng</h4>
+        <div class="order-box">
+          <div id="checkoutItems"></div>
+          <div class="summary-row"><span>Tạm tính</span><strong id="checkoutSubtotal">₫0</strong></div>
+          <div class="summary-row"><span>Phí ship</span><strong id="checkoutShipping">₫0</strong></div>
+          <div class="summary-row total"><span>Tổng thanh toán</span><strong id="checkoutTotal">₫0</strong></div>
+        </div>
+      </div>
+      <div id="checkoutNotice" class="helper" style="margin-top:16px"></div>
+      <div class="cta" style="margin-top:18px">
+        <button class="btn btn-primary" onclick="placeOrder()">Xác nhận đặt hàng</button>
+        <button class="btn btn-secondary" onclick="closeCheckout()">Quay lại</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container foot">
+      <div><strong style="color:var(--text)">HAMY KOREA Authentic</strong><div>Uy tín toàn Korea</div></div>
+      <div>© 2026 All rights reserved</div>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
+</body>
+</html>

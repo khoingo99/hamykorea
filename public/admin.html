@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeoulSkin Admin</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+          <strong>Admin SeoulSkin</strong>
+          <span>Quản lý đơn hàng và sản phẩm</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="pill" href="/">← Về trang bán hàng</a>
+        <button class="pill" id="adminAccountPill" onclick="openAdminAuth()">Đăng nhập admin</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-shell">
+    <h1 style="margin:0;font-size:32px">Dashboard quản trị</h1>
+    <p class="muted">Quản lý sản phẩm (thêm / sửa / xóa, upload ảnh) và duyệt đơn hàng.</p>
+
+    <div id="adminLoginBanner" class="empty" style="margin-top:20px">
+      <strong>Bạn chưa đăng nhập.</strong>
+      <div class="muted" style="margin-top:8px">Tài khoản admin: <strong>admin@seoulskin.com</strong> / <strong>admin123</strong></div>
+      <button class="btn btn-primary" style="margin-top:14px" onclick="openAdminAuth()">Đăng nhập admin</button>
+    </div>
+
+    <div id="adminContent" class="hidden">
+      <div class="admin-cards">
+        <div class="admin-card"><div class="label">Sản phẩm</div><div class="big" id="statProducts">--</div></div>
+        <div class="admin-card"><div class="label">Đơn hàng</div><div class="big" id="statOrders">--</div></div>
+        <div class="admin-card"><div class="label">Doanh thu</div><div class="big" id="statRevenue">--</div></div>
+      </div>
+
+      <h2 class="section-title" style="font-size:24px;margin:30px 0 14px">Đơn hàng gần đây</h2>
+      <div style="overflow-x:auto">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Mã</th><th>Khách</th><th>Sản phẩm</th><th>Tổng</th><th>Thanh toán</th><th>Trạng thái</th><th>Ngày</th><th>Cập nhật</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+
+      <div class="flex-row" style="justify-content:space-between;margin:30px 0 14px">
+        <h2 class="section-title" style="font-size:24px;margin:0">Sản phẩm</h2>
+        <button class="btn btn-primary" onclick="openProductModal()">＋ Thêm sản phẩm</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="admin-table">
+          <thead>
+            <tr><th>#</th><th>Ảnh</th><th>Tên</th><th>Danh mục</th><th>Giá</th><th>Tồn kho</th><th>Hành động</th></tr>
+          </thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div class="overlay" id="adminAuthOverlay">
+    <div class="modal" style="max-width:480px">
+      <div class="modal-head">
+        <div>
+          <h3>Đăng nhập admin</h3>
+          <div class="muted">Cần tài khoản có quyền admin</div>
+        </div>
+        <button class="close-btn" onclick="closeAdminAuth()">×</button>
+      </div>
+      <div class="form-group"><label>Email</label><input class="input" id="adminEmail" type="email" /></div>
+      <div class="form-group" style="margin-top:10px"><label>Mật khẩu</label><input class="input" id="adminPassword" type="password" /></div>
+      <button class="btn btn-primary btn-block" style="margin-top:16px" onclick="handleAdminLogin()">Đăng nhập</button>
+      <p id="adminAuthMsg" class="helper" style="margin-top:14px"></p>
+    </div>
+  </div>
+
+  <div class="overlay" id="productOverlay">
+    <div class="modal" style="max-width:860px">
+      <div class="modal-head">
+        <div>
+          <h3 id="productModalTitle">Thêm sản phẩm mới</h3>
+          <div class="muted">Hỗ trợ upload ảnh JPG / PNG / WEBP (tối đa 5MB)</div>
+        </div>
+        <button class="close-btn" onclick="closeProductModal()">×</button>
+      </div>
+
+      <form id="productForm" enctype="multipart/form-data" onsubmit="return false">
+        <input type="hidden" id="productId" />
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Tên sản phẩm *</label>
+            <input class="input" id="pName" type="text" placeholder="Vitamin C Glow Serum" />
+          </div>
+          <div class="form-group">
+            <label>Danh mục *</label>
+            <select class="select" id="pCategory">
+              <option value="serum">Serum</option>
+              <option value="toner">Toner</option>
+              <option value="cream">Kem dưỡng</option>
+              <option value="sunscreen">Chống nắng</option>
+              <option value="cleanser">Sữa rửa mặt</option>
+              <option value="mask">Mặt nạ</option>
+              <option value="mask">Son</option>
+              <option value="mask">Thực phẩm chức năng</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Giá (₫) *</label>
+            <input class="input" id="pPrice" type="number" min="0" placeholder="450000" />
+          </div>
+          <div class="form-group">
+            <label>Nhãn (tag)</label>
+            <input class="input" id="pTag" type="text" placeholder="Ampoule" />
+          </div>
+          <div class="form-group">
+            <label>Tồn kho</label>
+            <input class="input" id="pStock" type="text" placeholder="Còn hàng" />
+          </div>
+          <div class="form-group">
+            <label>Đánh giá</label>
+            <input class="input" id="pRating" type="text" placeholder="★ 4.8" />
+          </div>
+          <div class="form-group">
+            <label>Shape dự phòng (nếu chưa có ảnh)</label>
+            <select class="select" id="pShape">
+              <option value="bottle">Bottle</option>
+              <option value="jar">Jar</option>
+              <option value="tube">Tube</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Ảnh sản phẩm</label>
+            <input class="input" id="pImage" type="file" accept="image/jpeg,image/png,image/webp" />
+            <div class="helper" id="pImagePreviewBox">Chưa có ảnh. Tải lên ảnh mới hoặc để trống nếu muốn giữ ảnh cũ.</div>
+          </div>
+          <div class="form-group full">
+            <label>Mô tả</label>
+            <textarea class="input" id="pDescription" rows="2" placeholder="Mô tả ngắn về sản phẩm"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Thành phần nổi bật (mỗi dòng 1 mục)</label>
+            <textarea class="input" id="pIngredients" rows="4" placeholder="Niacinamide 5%&#10;Hyaluronic Acid"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Công dụng (mỗi dòng 1 mục)</label>
+            <textarea class="input" id="pBenefits" rows="4" placeholder="Dưỡng sáng&#10;Cấp ẩm"></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Cách dùng (mỗi dòng: Bước|Mô tả)</label>
+            <textarea class="input" id="pUsage" rows="4" placeholder="Bước 1|Dùng sau toner.&#10;Bước 2|Thoa đều toàn mặt."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Đánh giá khách hàng (mỗi dòng: Tên|Nội dung)</label>
+            <textarea class="input" id="pReviews" rows="3" placeholder="Lan Anh|Da ẩm hơn rõ rệt."></textarea>
+          </div>
+        </div>
+        <p id="productMsg" class="helper" style="margin-top:14px"></p>
+        <div class="cta" style="margin-top:16px">
+          <button class="btn btn-primary" onclick="saveProduct()">Lưu sản phẩm</button>
+          <button class="btn btn-secondary" onclick="closeProductModal()">Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/admin.js"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
+</body>
+</html>
