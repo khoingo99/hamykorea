@@ -192,7 +192,7 @@ async function saveProduct(){
   fd.append('benefits', document.getElementById('pBenefits').value);
   fd.append('ingredients', document.getElementById('pIngredients').value);
   fd.append('usage', document.getElementById('pUsage').value);
-  fd.append('reviews', document.getElementById('pReviews').value);
+  // fd.append('reviews', document.getElementById('pReviews').value);
 
   const fileInput = document.getElementById('pImage');
   if(fileInput.files && fileInput.files.length > 0){

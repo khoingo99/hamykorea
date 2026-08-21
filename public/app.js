@@ -212,6 +212,7 @@ function renderDetail(){
   if(!product) return;
   document.getElementById('detailCategory').textContent = product.tag || product.category;
   document.getElementById('detailName').textContent = product.name;
+  document.getElementById('detailPrice').textContent = formatPrice(product.price);
   document.getElementById('detailRating').textContent = product.rating || '★ --';
   document.getElementById('detailStock').textContent = product.stock || 'Còn hàng';
   document.getElementById('detailDesc').textContent = product.description;
